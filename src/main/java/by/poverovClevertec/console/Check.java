@@ -21,8 +21,8 @@ public class Check {
     }
 
     public Check(String path) {
-        String fileContent = convertPathStringToTextString(path);
-        String[] args = convertStringToArray(fileContent);
+        String contentOfFile = convertPathStringToTextString(path);
+        String[] args = convertStringToArray(contentOfFile);
         parseParams(args);
     }
 
@@ -39,9 +39,8 @@ public class Check {
 
     @SneakyThrows
     private String convertPathStringToTextString(String path) {
-        File file = Path.of("src", "main", "resources", path+".txt").toFile();
         StringBuilder collect = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             collect.append(reader.lines()
                     .collect(Collectors.joining("")));
         }
@@ -52,6 +51,16 @@ public class Check {
     public void printToFile() {
         File file = Path.of("src","main", "resources", "checkIntoFile.txt").toFile();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
+            List<String> stringList = createList();
+            for (String s : stringList) {
+                writer.write(s);
+                writer.newLine();
+            }
+        }
+    }
+        @SneakyThrows
+    public void printToFile(String path) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             List<String> stringList = createList();
             for (String s : stringList) {
                 writer.write(s);
