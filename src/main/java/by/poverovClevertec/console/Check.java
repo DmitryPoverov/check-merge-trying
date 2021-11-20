@@ -1,6 +1,6 @@
 package by.poverovClevertec.console;
 
-import by.clevertec.exception.WrongIdException;
+import by.poverovClevertec.exception.WrongIdException;
 import lombok.SneakyThrows;
 
 import java.io.*;
