@@ -58,6 +58,7 @@ public class Check {
             }
         }
     }
+
         @SneakyThrows
     public void printToFile(String path) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
