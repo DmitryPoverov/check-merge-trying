@@ -7,6 +7,7 @@ public class CheckRunner {
         if (args[0].equals("--f")) {
             Check check = new Check(args[1]);
             check.printToFile(args[2]);
+            System.out.println("File was written");
         } else {
             Check check = new Check(args);
             check.printToConsole();
