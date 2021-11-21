@@ -11,7 +11,5 @@ public class CheckRunner {
             Check check = new Check(args);
             check.printToConsole();
         }
-
-
     }
 }
