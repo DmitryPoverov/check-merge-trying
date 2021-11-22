@@ -77,10 +77,10 @@ public class Check {
             char[] c = temp1.toCharArray();
             if ((c[0] != 0) && (c[0] >= 48 && c[0] <= 57)) {
                 tempList.add(temp1);
-            } else if ((c[0] != 0) && (c[0] == 'c')) {
+            } else if ((c[0] != 0) && ((c[0] == 'c') && Cards.isSuchCard(temp1))) {
                 tempCard = appArg.replace("card-", "");
             } else {
-                System.out.println("!!! It seems like you entered a wrong format discount card!!!");
+                System.out.println("!!! It seems like you entered a wrong card number or wrong format card!!!");
             }
         }
         this.setDiscountCard(tempCard);
