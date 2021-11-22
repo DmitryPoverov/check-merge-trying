@@ -59,7 +59,6 @@ public class Check {
         }
     }
 
-        @SneakyThrows
     public void printToFile(String path) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             List<String> stringList = createList();
@@ -67,7 +66,9 @@ public class Check {
                 writer.write(s);
                 writer.newLine();
             }
-        }
+        } catch (IOException e) {
+                System.out.println("!!! You entered a wrong path!!! ");
+            }
     }
 
     private void parseParams(String[] appArgs) {
