@@ -119,7 +119,7 @@ public class Check {
         int discountProductsCounter = 0;
         double fiveProductDiscount;
         double fiveProductsTotalDiscount=0;
-        double discountCardDiscount = discountCard==null? 0 : 0.15;
+        double discountCardDiscount = discountCard.equals("")? 0 : 0.15;
         double total;
         double totalDiscount;
         double totalPrice = 0;

@@ -3,7 +3,8 @@ package by.poverovClevertec.console;
 public enum Cards {
     CARD1("card-120"),
     CARD2("card-121"),
-    CARD3("card-122");
+    CARD3("card-122"),
+    CARD4("card-123");
 
     private String number;
 
