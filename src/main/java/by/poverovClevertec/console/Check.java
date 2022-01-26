@@ -147,7 +147,7 @@ public class Check {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         stringsToPrint.add("                  " + formatter.format(new Date()));
         stringsToPrint.add("--------------------------------------");
-        stringsToPrint.add("QTY\tDESCRIPTION\t       \tPRICE   TOTAL");
+        stringsToPrint.add("QTY DESCRIPTION         PRICE   TOTAL");
 
         for (ParamMapper pM : paramMappersList) {
             fiveProductDiscount = 0;
