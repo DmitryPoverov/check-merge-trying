@@ -1,6 +1,7 @@
 .idea
 out
 target
+.gitignore
 *.MF
 
 # Compiled class file

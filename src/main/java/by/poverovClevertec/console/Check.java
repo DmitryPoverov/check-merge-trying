@@ -2,6 +2,8 @@ package by.poverovClevertec.console;
 
 import by.poverovClevertec.exception.WrongIdException;
 import lombok.SneakyThrows;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -12,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Check {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private String discountCard;
     private List<ParamMapper> paramMappersList = new ArrayList<>();
@@ -68,6 +72,7 @@ public class Check {
             }
         } catch (IOException e) {
                 System.out.println("!!! You entered a wrong path!!! ");
+                LOGGER.error("Was entered a wrong path.");
             }
     }
 
@@ -81,8 +86,9 @@ public class Check {
                 tempList.add(temp1);
             } else if ((c[0] != 0) && ((c[0] == 'c') && Cards.isSuchCard(temp1))) {
                 tempCard = appArg.replace("card-", "");
+                LOGGER.info("Card was applied successfully.");
             } else {
-                System.out.println("!!! It seems like you entered a wrong card number or wrong format card!!!");
+                LOGGER.error("Card was NOT applied successfully. Wrong number/format.");
             }
         }
         this.setDiscountCard(tempCard);
@@ -137,7 +143,7 @@ public class Check {
                     discountProductsCounter+=quantity;
                 }
             } catch (WrongIdException e) {
-                System.out.println("!!! It seems like id=" + id + " is wrong !!!");
+                LOGGER.error("Was entered wrong id=" + id);
             }
         }
 
