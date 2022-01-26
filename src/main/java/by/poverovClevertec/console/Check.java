@@ -2,8 +2,6 @@ package by.poverovClevertec.console;
 
 import by.poverovClevertec.exception.WrongIdException;
 import lombok.SneakyThrows;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -14,8 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Check {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private String discountCard;
     private List<ParamMapper> paramMappersList = new ArrayList<>();
@@ -64,16 +60,15 @@ public class Check {
     }
 
     public void printToFile(String path) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             List<String> stringList = createList();
             for (String s : stringList) {
                 writer.write(s);
                 writer.newLine();
             }
         } catch (IOException e) {
-                System.out.println("!!! You entered a wrong path!!! ");
-                LOGGER.error("Was entered a wrong path.");
-            }
+            System.out.println("!!! You entered a wrong path!!! ");
+        }
     }
 
     private void parseParams(String[] appArgs) {
@@ -86,9 +81,8 @@ public class Check {
                 tempList.add(temp1);
             } else if ((c[0] != 0) && ((c[0] == 'c') && Cards.isSuchCard(temp1))) {
                 tempCard = appArg.replace("card-", "");
-                LOGGER.info("Card was applied successfully.");
             } else {
-                LOGGER.error("Card was NOT applied successfully. Wrong number/format.");
+                System.out.println("!!! It seems like you entered a wrong card number or wrong format card!!!");
             }
         }
         this.setDiscountCard(tempCard);
@@ -112,11 +106,8 @@ public class Check {
         return paramMappers;
     }
 
-    public void printToConsole() {
-        List<String> stringList = createList();
-        for (String s : stringList) {
-            System.out.println(s);
-        }
+    public List<String> printToStringList() {
+        return createList();
     }
 
     public List<String> createList() {
@@ -143,7 +134,7 @@ public class Check {
                     discountProductsCounter+=quantity;
                 }
             } catch (WrongIdException e) {
-                LOGGER.error("Was entered wrong id=" + id);
+                System.out.println("!!! It seems like id=" + id + " is wrong !!!");
             }
         }
 

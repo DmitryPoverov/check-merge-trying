@@ -11,7 +11,7 @@ public class ProductsTest {
     private static final int WRONG_ID = 100;
 
     @Test
-    public void testGetDescriptionByIdShouldReturnId() {
+    public void testPrintToConsoleShouldReturnId() {
         //given
         String expected = "Dress2";
         //when

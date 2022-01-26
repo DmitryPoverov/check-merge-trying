@@ -10,7 +10,9 @@ public class CheckRunner {
             System.out.println("File is written");
         } else {
             Check check = new Check(args);
-            check.printToConsole();
+            for (String s : check.printToStringList()) {
+                System.out.println(s);
+            }
         }
     }
 }
