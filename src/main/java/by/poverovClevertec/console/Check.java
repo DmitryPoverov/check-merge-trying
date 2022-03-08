@@ -106,11 +106,8 @@ public class Check {
         return paramMappers;
     }
 
-    public void printToConsole() {
-        List<String> stringList = createList();
-        for (String s : stringList) {
-            System.out.println(s);
-        }
+    public List<String> printToStringList() {
+        return createList();
     }
 
     public List<String> createList() {
