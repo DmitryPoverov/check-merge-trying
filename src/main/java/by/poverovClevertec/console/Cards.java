@@ -24,4 +24,8 @@ public enum Cards {
         }
         return false;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Web_version

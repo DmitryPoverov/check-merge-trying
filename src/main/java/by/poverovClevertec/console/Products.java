@@ -1,6 +1,8 @@
 package by.poverovClevertec.console;
 
 import by.poverovClevertec.exception.WrongIdException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public enum Products {
 
@@ -18,6 +20,8 @@ public enum Products {
     BOOTS2(13, "Boots2", 25, 0),
     SHOES2(11, "Shoes2", 30, 1),
     JACKET2(12, "Jacket2", 35, 1);
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private final int id;
     private final String description;
@@ -52,10 +56,12 @@ public enum Products {
             }
         }
         if (description.equals("")) {
-            throw new WrongIdException("A WRONG ID");
+            LOGGER.error("getDescriptionById: id=" + id + " description is empty");
+            throw new WrongIdException("description is empty");
         }
         return description;
     }
+
     public static boolean isDiscount(int id) {
         boolean discount = false;
         for (Products p : Products.values()) {
@@ -66,7 +72,8 @@ public enum Products {
             }
         }
         if (Products.getDescriptionById(id).equals("")) {
-            throw new WrongIdException("A WRONG ID");
+            LOGGER.error("A WRONG ID=" + id);
+            throw new WrongIdException("isDiscount: An ID=" + id + " is WRONG");
         }
         return discount;
     }
@@ -79,7 +86,8 @@ public enum Products {
             }
         }
         if (price == 0) {
-            throw new WrongIdException("A WRONG ID");
+            LOGGER.error("A WRONG ID");
+            throw new WrongIdException("getPriceById: A WRONG ID");
         }
         return price;
     }
