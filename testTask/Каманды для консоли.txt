@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+
+--f "C:\Users\PD\IdeaProjects\Clevertec Check\testTask\1.txt" "C:\Users\PD\IdeaProjects\Clevertec Check\testTask\2.txt"
+
 C:\Users\PD> cd C:\Users\PD\IdeaProjects\Clevertec Check\out\artifacts\clevertecCheck_jar>
 
 C:\Users\PD\IdeaProjects\Clevertec Check\out\artifacts\clevertecCheck_jar>java -jar clevertecCheck.jar 1-2 2-2 3-3 4-1 9-3 card-123
