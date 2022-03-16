@@ -1,8 +1,9 @@
-package by.poverovClevertec.console;
+package ru.clevertec.console;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 public class CheckTest {
@@ -30,7 +31,7 @@ public class CheckTest {
             """;
 
     @Test
-    public void testGetDescriptionByIdShouldReturnId() {
+    public void testGetDescriptionByIdShouldReturnId() throws IOException {
         //given
         Check check = new Check("testTask/1.txt");
         //when

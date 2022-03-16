@@ -1,4 +1,4 @@
-package by.poverovClevertec.console;
+package ru.clevertec.console;
 
 public class ParamMapper {
 

@@ -1,6 +1,6 @@
-package by.poverovClevertec.console;
+package ru.clevertec.console;
 
-import by.poverovClevertec.exception.WrongIdException;
+import ru.clevertec.exception.WrongIdException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

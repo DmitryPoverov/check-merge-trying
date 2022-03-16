@@ -1,8 +1,10 @@
-package by.poverovClevertec.console;
+package ru.clevertec.console;
+
+import java.io.IOException;
 
 public class CheckRunner {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         if (args[0].equals("--f")) {
             Check check = new Check(args[1]);

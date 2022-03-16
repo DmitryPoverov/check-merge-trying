@@ -1,6 +1,6 @@
-package by.poverovClevertec.console;
+package ru.clevertec.console;
 
-import by.poverovClevertec.exception.WrongIdException;
+import ru.clevertec.exception.WrongIdException;
 import lombok.SneakyThrows;
 
 import java.io.*;
@@ -20,7 +20,7 @@ public class Check {
         parseParams(args);
     }
 
-    public Check(String path) {
+    public Check(String path) throws IOException {
         String contentOfFile = convertPathStringToTextString(path);
         String[] args = convertStringToArray(contentOfFile);
         parseParams(args);
@@ -38,7 +38,7 @@ public class Check {
     }
 
     @SneakyThrows
-    private String convertPathStringToTextString(String path) {
+    private String convertPathStringToTextString(String path) throws IOException {
         StringBuilder collect = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             collect.append(reader.lines()
@@ -48,7 +48,7 @@ public class Check {
     }
 
     @SneakyThrows
-    public void printToFile() {
+    public void printToFile() throws IOException {
         File file = Path.of("src","main", "resources", "checkIntoFile.txt").toFile();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
             List<String> stringList = createList();

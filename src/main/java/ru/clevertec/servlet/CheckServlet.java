@@ -1,8 +1,9 @@
-package by.poverovClevertec.servlet;
+package ru.clevertec.servlet;
 
-import by.poverovClevertec.console.Check;
+import ru.clevertec.console.Check;
 import lombok.SneakyThrows;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class CheckServlet extends HttpServlet {
 
     @SneakyThrows
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Map<String, String[]> parameterMap = req.getParameterMap();
         String[] ids = parameterMap.get("id");
