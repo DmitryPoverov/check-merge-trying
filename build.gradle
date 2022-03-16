@@ -29,7 +29,7 @@ application {
 }
 
 
-//This task copies the 1.txt file from /testTask to testTask/tempCopy
+//This task copies the 1.txt-file from /testTask to testTask/tempCopy
 task copyFiles(type: Copy) {
     from 'testTask'
     into 'testTask/tempCopy'
@@ -37,7 +37,7 @@ task copyFiles(type: Copy) {
 }
 
 
-//This task downloads file 2.txt from gitHub.com to a local folder /testTask/tempDownload
+//This task downloads 2.txt-file from gitHub.com to a local folder /testTask/tempDownload
 task downloadFiles(type: FileDownloader) {
     sourceUrl = 'https://github.com/DmitryPoverov/Clevertec-Check/blob/master/testTask/2.txt?raw=true'
     outputFile = new File('testTask/tempDownload/2.txt')
@@ -55,7 +55,7 @@ class FileDownloader extends DefaultTask {
         try {
             ant.get(src: sourceUrl, dest: outputFile)
         } catch (Exception e) {
-            printl e
+            println e
         }
     }
 }
