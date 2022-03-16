@@ -29,32 +29,6 @@ application {
 }
 
 
-// 1st training task
-task task1 {
-    println("Task 1.")
-}
-// Added to the task body
-task1 {
-    println("Task 1 add.")
-}
-task1.doFirst {
-    println("Task 1 doFirst")
-}
-task1.doLast {
-    println("Task 1 doLast")
-}
-
-
-// The 2nd training task which one depends on the 1st task
-task task2 (dependsOn:task1){
-    println("Task 2.")
-}
-// Added to the task body
-task2 {
-    println("Task 2 add.")
-}
-
-
 //This task copies the 1.txt file from /testTask to testTask/tempCopy
 task copyFiles(type: Copy) {
     from 'testTask'
@@ -85,3 +59,52 @@ class FileDownloader extends DefaultTask {
         }
     }
 }
+
+
+//// 1st training task
+//task hello {
+//    println("Task1")
+//    println("Task1 add")
+//}
+//hello.doFirst {
+//    println("Task1 doFirst")
+//}
+//hello.doLast {
+//    println("Task1 doLast")
+//}
+//
+//
+//// The 2nd training task which one depends on the 1st task
+//task bye(dependsOn:hello) {
+//}
+//bye {
+//    println("Task2")
+//    println("Task2 add")
+//}
+
+
+////Here's a custom plugin
+////Extension
+//class WeatherExtension {
+//    String forecast = 'My default value'
+//}
+//
+//class WeatherForecastPlugin implements Plugin<Project>{
+//
+//    @Override
+//    void apply(Project project) {
+//
+//        def extension = project.extensions.create('weather', WeatherExtension)
+//
+//        project.task('weatherTomorrow'){
+//            group = 'Weather'
+//            doLast{
+//                println 'Tomorrow it will be' + extension.forecast
+//            }
+//        }
+//    }
+//}
+//
+//apply plugin: WeatherForecastPlugin
+//
+//weather.forecast = ' snow and hail and -10 degree centigrade.'
