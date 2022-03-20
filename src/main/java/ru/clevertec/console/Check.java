@@ -4,7 +4,6 @@ import ru.clevertec.exception.WrongIdException;
 import lombok.SneakyThrows;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,47 +15,61 @@ public class Check {
     private String discountCard;
     private List<ParamMapper> paramMappersList = new ArrayList<>();
 
+    public Check() {
+    }
+
     public Check(String[] args) {
-        parseParams(args);
+        parseParamsToGoodsAndCard(args);
     }
 
     public Check(String path) throws IOException {
-        String contentOfFile = convertPathStringToTextString(path);
-        String[] args = convertStringToArray(contentOfFile);
-        parseParams(args);
+        String contentOfFile = convertPathStringToTextString(path, "");
+        String[] argsFromFile = convertStringToArray(contentOfFile, ", ");
+        parseParamsToGoodsAndCard(argsFromFile);
     }
 
     private void setParamMappersList(List<ParamMapper> paramMappersList) {
         this.paramMappersList = paramMappersList;
     }
+
     private void setDiscountCard(String discountCard) {
         this.discountCard = discountCard;
     }
 
-    private String[] convertStringToArray(String text) {
-        return text.split(", ");
-    }
-
-    @SneakyThrows
-    private String convertPathStringToTextString(String path) throws IOException {
-        StringBuilder collect = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            collect.append(reader.lines()
-                    .collect(Collectors.joining("")));
-        }
-        return collect.toString();
-    }
-
-    @SneakyThrows
-    public void printToFile() throws IOException {
-        File file = Path.of("src","main", "resources", "checkIntoFile.txt").toFile();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
-            List<String> stringList = createList();
-            for (String s : stringList) {
-                writer.write(s);
-                writer.newLine();
+    public void checkData(String[] strings, String invalidDataFilePath) {
+        List<String> params = new ArrayList<>();
+        try(FileWriter fileWriter = new FileWriter(invalidDataFilePath, false)) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String s : strings) {
+                if (isValid(s)) {
+                    params.add(s);
+                } else {
+                    stringBuilder.append(s).append("\n");
+                }
             }
+            fileWriter.write(stringBuilder.toString());
+            setParamMappersList(setParamMapper(params, ";"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
+    }
+
+    public boolean isValid(String productString) {
+        String regex = "^((100)|([1-9][0-9])|[1-9]);([A-Z][a-z]{2,});((([1-9])|([1-9][0-9])|(100)).([0-9][0-9]));((20)|([1][0-9])|([1-9]))$";
+        return productString.matches(regex);
+    }
+
+    protected String[] convertStringToArray(String text, String regex) {
+        return text.split(regex);
+    }
+
+    @SneakyThrows
+    protected String convertPathStringToTextString(String path, String delimiter) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            sb.append(reader.lines().collect(Collectors.joining(delimiter)));
+        }
+        return sb.toString();
     }
 
     public void printToFile(String path) {
@@ -71,43 +84,84 @@ public class Check {
         }
     }
 
-    private void parseParams(String[] appArgs) {
+    private void parseParamsToGoodsAndCard(String[] args) {
         List<String> tempList = new ArrayList<>();
         String tempCard = "";
-        for (String appArg : appArgs) {
-            String temp1 = appArg.replace(",", "");
+        for (String arg : args) {
+            String temp1 = arg.replace(",", "");
             char[] c = temp1.toCharArray();
             if ((c[0] != 0) && (c[0] >= 48 && c[0] <= 57)) {
                 tempList.add(temp1);
             } else if ((c[0] != 0) && ((c[0] == 'c') && Cards.isSuchCard(temp1))) {
-                tempCard = appArg.replace("card-", "");
+                tempCard = arg.replace("card-", "");
             } else {
                 System.out.println("!!! It seems like you entered a wrong card number or wrong format card!!!");
             }
         }
-        this.setDiscountCard(tempCard);
-        this.setParamMappersList(this.setParamMapper(tempList));
+        setDiscountCard(tempCard);
+        setParamMappersList(setParamMapper(tempList, "-"));
     }
 
-    private List<ParamMapper> setParamMapper(List<String> params) {
+    protected List<ParamMapper> setParamMapper(List<String> params, String regex) {
         List<ParamMapper> paramMappers = new ArrayList<>();
         for (String line : params) {
-            ParamMapper mapper = new ParamMapper();
-            var split = line.split("-");
-            for (int i=0; i<line.length(); i++) {
-                if(i==0) {
-                    mapper.setId(Integer.parseInt(split[i]));
-                } else if(i==1) {
-                    mapper.setQuantity(Integer.parseInt(split[i]));
+            ParamMapper product = new ParamMapper();
+            String[] products = line.split(regex);
+            if (products.length==2) {
+                for (int i = 0; i < products.length; i++) {   //???????????????????
+                    if (i == 0) {
+                        product.setId(Integer.parseInt(products[i]));
+                    } else {
+                        product.setQuantity(Integer.parseInt(products[i]));
+                    }
+                }
+            } else if (products.length==4) {
+                for (int i = 0; i < products.length; i++) {
+                    if (i == 0) {
+                        product.setId(Integer.parseInt(products[i]));
+                    } else if (i == 1) {
+                        product.setName(products[i]);
+                    } else if (i == 2) {
+                        product.setPrice(Double.parseDouble(products[i]));
+                    } else {
+                        product.setQuantity(Integer.parseInt(products[i]));
+                    }
                 }
             }
-            paramMappers.add(mapper);
+
+            paramMappers.add(product);
         }
         return paramMappers;
     }
 
     public List<String> printToStringList() {
         return createList();
+    }
+
+    public void printToConsoleFromFile() {
+        System.out.println("--------------------------------------");
+        System.out.println("            CASH RECEIPT");
+        System.out.println("            Supermarket\n");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("                  " + formatter.format(new Date()));
+        System.out.println("--------------------------------------");
+        System.out.println("QTY DESCRIPTION         PRICE   TOTAL");
+        double finalPrice = 0;
+        for (ParamMapper pM : paramMappersList) {
+            try {
+                String description = pM.getName();
+                int quantity = pM.getQuantity();
+                double price = pM.getPrice();
+                double total = quantity*price;
+                finalPrice += total;
+
+                System.out.printf("%2d  %-17s %7.2f  %6.2f%n", quantity, description, price, total);
+            } catch (WrongIdException ignored) {
+            }
+        }
+        System.out.println("--------------------------------------");
+        System.out.printf("TOTAL %31.2f%n", finalPrice);
+        System.out.println("--------------------------------------");
     }
 
     public List<String> createList() {
@@ -117,21 +171,21 @@ public class Check {
         String description;
         int discountProductsCounter = 0;
         double fiveProductDiscount;
-        double fiveProductsTotalDiscount=0;
-        double discountCardDiscount = discountCard.equals("")? 0 : 0.15;
+        double fiveProductsTotalDiscount = 0;
+        double discountCardDiscount = discountCard.equals("") ? 0 : 0.15;
         double total;
         double totalDiscount;
         double totalPrice = 0;
         double finalPrice;
-        List <String> stringsToPrint = new ArrayList<>();
+        List<String> stringsToPrint = new ArrayList<>();
 
         for (ParamMapper pM : paramMappersList) {
             id = pM.getId();
             quantity = pM.getQuantity();
 
             try {
-                if(Products.isDiscount(id)) {
-                    discountProductsCounter+=quantity;
+                if (Products.isDiscount(id)) {
+                    discountProductsCounter += quantity;
                 }
             } catch (WrongIdException e) {
                 System.out.println("!!! It seems like id=" + id + " is wrong !!!");
@@ -154,29 +208,30 @@ public class Check {
                 description = Products.getDescriptionById(pM.getId());
                 price = Products.getPriceById(pM.getId());
                 quantity = pM.getQuantity();
-                if(discountProductsCounter>5){
-                    fiveProductDiscount=0.2;
+                if (discountProductsCounter > 5) {
+                    fiveProductDiscount = 0.2;
                 }
                 if (Products.isDiscount(id)) {
-                    double fiveProductsCurrentDiscount = fiveProductDiscount*price*quantity;
+                    double fiveProductsCurrentDiscount = fiveProductDiscount * price * quantity;
                     fiveProductsTotalDiscount += fiveProductsCurrentDiscount;
-                    total = price*quantity-fiveProductsCurrentDiscount;
+                    total = price * quantity - fiveProductsCurrentDiscount;
                 } else {
-                    total = price*quantity;
+                    total = price * quantity;
                 }
-                totalPrice+=total;
+                totalPrice += total;
 
                 stringsToPrint.add(String.format("%2d  %-17s %7.2f  %6.2f", quantity, description, price, total));
-            } catch (WrongIdException ignored) {}
+            } catch (WrongIdException ignored) {
+            }
         }
-        totalDiscount=totalPrice*discountCardDiscount;
+        totalDiscount = totalPrice * discountCardDiscount;
         finalPrice = totalPrice - totalDiscount;
 
         stringsToPrint.add("--------------------------------------");
         stringsToPrint.add("Discount card No:" + discountCard);
         stringsToPrint.add(String.format("Discount card discount %14.2f", totalDiscount));
         stringsToPrint.add(String.format("SALE discount %23.2f", fiveProductsTotalDiscount));
-        stringsToPrint.add(String.format("Total discount %22.2f", fiveProductsTotalDiscount+totalDiscount));
+        stringsToPrint.add(String.format("Total discount %22.2f", fiveProductsTotalDiscount + totalDiscount));
         stringsToPrint.add(String.format("TOTAL %31.2f", finalPrice));
         stringsToPrint.add("--------------------------------------");
         return stringsToPrint;
