@@ -55,7 +55,7 @@ public class Check {
     }
 
     public boolean isValid(String productString) {
-        String regex = "^((100)|([1-9]\\d)|[1-9]);([A-ZА-ЯЁа-яё][a-zа-яё]{2,29});((([1-9])|([1-9]\\d)|(100))\\.\\d{2});((20)|([1]\\d)|([1-9]))$";
+        String regex = "^((100)|([1-9]\\d)|[1-9]);(([A-Z][a-z]{2,29})|([А-ЯЁа-яё][а-яё]{2,29}));((([1-9])|([1-9]\\d)|(100))\\.\\d{2});((20)|([1]\\d)|([1-9]))$";
         return productString.matches(regex);
     }
 
