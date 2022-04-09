@@ -1,5 +1,6 @@
 package ru.clevertec.customList;
 
+import ru.clevertec.customList.iterator.IteratorDP;
 import ru.clevertec.customList.list.ArrayListDP;
 import ru.clevertec.customList.list.ListDP;
 
@@ -112,5 +113,38 @@ public class ListDPRunner {
         integerArrayListDP.add(3);
 
         System.out.println("\nThe array after adding null element: " + integerArrayListDP);
+
+        integerArrayListDP.set(1, 2);
+        integerArrayListDP.add(4);
+        integerArrayListDP.add(5);
+
+        Object[] integers = integerArrayListDP.toArray();
+        System.out.print("\nArray from the current list: ");
+        for (Object i : integers) {
+            System.out.print(i + " ");
+        }
+
+        System.out.println("\n\n" + integerArrayListDP);
+        integerArrayListDP.setMaxSize(5);
+        IteratorDP<Integer> iterator4 = integerArrayListDP.iterator();
+        iterator4.next();
+        iterator4.next();
+        iterator4.addBefore(88);
+        System.out.println(integerArrayListDP + ". Added to a bounded list.");
+
+        integerArrayListDP.clear();
+        integerArrayListDP.add(1);
+        integerArrayListDP.add(2);
+        integerArrayListDP.add(3);
+        integerArrayListDP.add(4);
+        integerArrayListDP.add(5);
+        integerArrayListDP.setMaxSize(6);
+        System.out.println("\n" + integerArrayListDP);
+
+        IteratorDP<Integer> iterator5 = integerArrayListDP.iterator();
+        iterator5.next();
+        iterator5.next();
+        iterator5.addAfter(88);
+        System.out.println(integerArrayListDP + ". Added to a unbounded list.");
     }
 }

@@ -1,6 +1,6 @@
 package ru.clevertec.customList.list;
 
-import java.util.Iterator;
+import ru.clevertec.customList.iterator.IteratorDP;
 
 public interface ListDP<T> extends Iterable<T> {
 
@@ -22,9 +22,9 @@ public interface ListDP<T> extends Iterable<T> {
 
     T get(int position);
 
-    T[] toArray_();
+    T[] toArray();
 
     void trim();
 
-    Iterator<T> iterator();
+    IteratorDP<T> iterator();
 }

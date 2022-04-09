@@ -200,7 +200,7 @@ public class ArrayListDP<T> implements ListDP<T>, Iterable<T> {
      * @return an array of not-null element or a zero-sized array in case the list doesn't contain they.
      */
     @Override
-    public T[] toArray_() {
+    public T[] toArray() {
         int counter = countNotNull();
         return getNotNullArray(counter);
     }
@@ -297,22 +297,53 @@ public class ArrayListDP<T> implements ListDP<T>, Iterable<T> {
             }
         }
 
-        //TODO addBefore()
+        /**
+         * Adds the specified element to this list at position before the iterator.
+         * In case the list bounded by maxSize() the last element of the current list will be lost.
+         * @param object to be added to this list to the place before iterator
+         * @throws UnsupportedOperationException if the array has the size 0 or iterator is at index 0.
+         */
         @Override
         public void addBefore(T object) {
             if (objects.length == 0 || currentIndex == 0) {
                 throw new UnsupportedOperationException("There is no place before.");
-            } else if (maxSize == -1) {
-                T[] tempObjects = (T[]) new Object[objects.length - currentIndex];
-                objects[--currentIndex] = object;
             } else {
-
+                T[] tailElements = (T[]) new Object[objects.length - currentIndex];
+                System.arraycopy(objects, currentIndex, tailElements, 0, tailElements.length);
+                objects[currentIndex++] = object;
+                if (maxSize == -1 || objects.length+1<=maxSize) {
+                    T[] temp = Arrays.copyOf(objects, objects.length + 1);
+                    System.arraycopy(tailElements, 0, temp, currentIndex, tailElements.length);
+                    objects = temp;
+                } else {
+                    System.arraycopy(tailElements, 0, objects, currentIndex, tailElements.length-1);
+                }
             }
         }
 
-        //TODO addAfter()
+        /**
+         * Adds the specified element to this list at position after the iterator.
+         * In case the list bounded by maxSize() the last element of the current list will be lost.
+         * @param object to be added to this list to the place after iterator
+         * @throws UnsupportedOperationException if the array has the size 0 or iterator is at index 0.
+         */
         @Override
         public void addAfter(T object) {
+            if (objects.length == 0 || currentIndex == 0) {
+                throw new UnsupportedOperationException("There is no place before.");
+            } else {
+                T[] tailElements = (T[]) new Object[objects.length - ++currentIndex];
+                System.arraycopy(objects, currentIndex, tailElements, 0, tailElements.length);
+                objects[currentIndex++] = object;
+                if (maxSize == -1 || objects.length+1<=maxSize) {
+                    T[] temp = Arrays.copyOf(objects, objects.length + 1);
+                    System.arraycopy(tailElements, 0, temp, currentIndex, tailElements.length);
+                    objects = temp;
+                } else {
+                    System.arraycopy(tailElements, 0, objects, currentIndex, tailElements.length-1);
+                }
+            }
+
         }
     }
 }
