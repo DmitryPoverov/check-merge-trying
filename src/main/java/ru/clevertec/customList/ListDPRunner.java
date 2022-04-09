@@ -124,7 +124,7 @@ public class ListDPRunner {
             System.out.print(i + " ");
         }
 
-        System.out.println("\n\n" + integerArrayListDP);
+        System.out.println("\n\n" + integerArrayListDP + ". Now cursor is on index 2.");
         integerArrayListDP.setMaxSize(5);
         IteratorDP<Integer> iterator4 = integerArrayListDP.iterator();
         iterator4.next();
@@ -139,7 +139,7 @@ public class ListDPRunner {
         integerArrayListDP.add(4);
         integerArrayListDP.add(5);
         integerArrayListDP.setMaxSize(6);
-        System.out.println("\n" + integerArrayListDP);
+        System.out.println("\n" + integerArrayListDP + ". Now cursor is on index 2.");
 
         IteratorDP<Integer> iterator5 = integerArrayListDP.iterator();
         iterator5.next();
