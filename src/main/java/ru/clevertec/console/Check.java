@@ -128,7 +128,6 @@ public class Check {
                     }
                 }
             }
-
             paramMappers.add(product);
         }
         return paramMappers;
