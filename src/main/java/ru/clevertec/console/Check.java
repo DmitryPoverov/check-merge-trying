@@ -70,6 +70,7 @@ public class Check {
         return sb.toString();
     }
 
+// STREAM API
     public void printToFile(String path) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             List<String> stringList = createList();
