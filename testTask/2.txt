@@ -2,7 +2,7 @@
             CASH RECEIPT
             Supermarket
 
-                  2022-05-20 17:09:53
+                  2022-05-20 18:05:19
 --------------------------------------
 QTY DESCRIPTION         PRICE   TOTAL
  3  Boots2              25.00   75.00
