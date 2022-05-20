@@ -55,7 +55,7 @@ public class Check {
     }
 
     public boolean isValid(String productString) {
-        String regex = "^(100|[1-9]\\d?);([A-Z][a-z]{2,29}|[А-ЯЁ][а-яё]{2,29});(100\\.00|[1-9]\\d?\\.\\d{2});(20|[1]\\d|[1-9])$";
+        String regex = "^(100|[1-9]\\d?);([A-Z][a-z]{2,29}|[А-ЯЁ][а-яё]{2,29});(100\\.00|[1-9]\\d?\\.\\d{2});(20|1\\d|[1-9])$";
         return productString.matches(regex);
     }
 
@@ -78,6 +78,7 @@ public class Check {
             for (String s : stringList) {
                 writer.write(s);
                 writer.newLine();
+
             }
         } catch (IOException e) {
             System.out.println("!!! You entered a wrong path!!! ");
