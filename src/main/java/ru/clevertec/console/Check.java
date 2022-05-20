@@ -1,7 +1,6 @@
 package ru.clevertec.console;
 
 import ru.clevertec.exception.WrongIdException;
-import lombok.SneakyThrows;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -50,7 +49,7 @@ public class Check {
             fileWriter.write(stringBuilder.toString());
             setParamMappersList(setParamMapper(params, ";"));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("!!! " + e.getMessage());
         }
     }
 
@@ -63,7 +62,6 @@ public class Check {
         return text.split(regex);
     }
 
-    @SneakyThrows
     protected String convertPathStringToTextString(String path, String delimiter) throws IOException {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -75,13 +73,31 @@ public class Check {
     public void printToFile(String path) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             List<String> stringList = createList();
-            for (String s : stringList) {
+
+/* Old version.
+                for (String s : stringList) {
                 writer.write(s);
                 writer.newLine();
+            }*/
 
-            }
+// Stream API.
+            stringList.stream()
+                    .peek(row -> {
+                        try {
+                            writer.write(row);
+                        } catch (IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    })
+                    .forEach(row -> {
+                        try {
+                            writer.newLine();
+                        } catch (IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    });
         } catch (IOException e) {
-            System.out.println("!!! You entered a wrong path!!! ");
+            System.out.println("!!! You entered the wrong path !!! ");
         }
     }
 
