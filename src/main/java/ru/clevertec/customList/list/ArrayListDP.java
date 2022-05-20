@@ -196,7 +196,7 @@ public class ArrayListDP<T> implements ListDP<T>, Iterable<T> {
     }
 
     /**
-     * Looks for and returns an array of not-null element is containing in the specified list if it contains they.
+     * Looks for and returns an array of not-null element is containing in the current list if it contains they.
      * @return an array of not-null element or a zero-sized array in case the list doesn't contain they.
      */
     @Override
@@ -309,15 +309,7 @@ public class ArrayListDP<T> implements ListDP<T>, Iterable<T> {
                 throw new UnsupportedOperationException("There is no place before.");
             } else {
                 T[] tailElements = (T[]) new Object[objects.length - currentIndex];
-                System.arraycopy(objects, currentIndex, tailElements, 0, tailElements.length);
-                objects[currentIndex++] = object;
-                if (maxSize == -1 || objects.length+1<=maxSize) {
-                    T[] temp = Arrays.copyOf(objects, objects.length + 1);
-                    System.arraycopy(tailElements, 0, temp, currentIndex, tailElements.length);
-                    objects = temp;
-                } else {
-                    System.arraycopy(tailElements, 0, objects, currentIndex, tailElements.length-1);
-                }
+                processArray(object, tailElements);
             }
         }
 
@@ -333,17 +325,27 @@ public class ArrayListDP<T> implements ListDP<T>, Iterable<T> {
                 throw new UnsupportedOperationException("There is no place before.");
             } else {
                 T[] tailElements = (T[]) new Object[objects.length - ++currentIndex];
-                System.arraycopy(objects, currentIndex, tailElements, 0, tailElements.length);
-                objects[currentIndex++] = object;
-                if (maxSize == -1 || objects.length+1<=maxSize) {
-                    T[] temp = Arrays.copyOf(objects, objects.length + 1);
-                    System.arraycopy(tailElements, 0, temp, currentIndex, tailElements.length);
-                    objects = temp;
-                } else {
-                    System.arraycopy(tailElements, 0, objects, currentIndex, tailElements.length-1);
-                }
+                processArray(object, tailElements);
             }
 
+        }
+
+        /**
+         * it Processes the current array: adds a new element and shifts others elements to the right.
+         * @param object to be added to this list to the place before/after iterator
+         * @param tailElements a pre-defined array for copying inside it the right part of the current array
+         * @throws UnsupportedOperationException if the array has the size 0 or iterator is at index 0.
+         */
+        private void processArray (T object, T[] tailElements) {
+            System.arraycopy(objects, currentIndex, tailElements, 0, tailElements.length);
+            objects[currentIndex++] = object;
+            if (maxSize == -1 || objects.length+1<=maxSize) {
+                T[] temp = Arrays.copyOf(objects, objects.length + 1);
+                System.arraycopy(tailElements, 0, temp, currentIndex, tailElements.length);
+                objects = temp;
+            } else {
+                System.arraycopy(tailElements, 0, objects, currentIndex, tailElements.length-1);
+            }
         }
     }
 }
