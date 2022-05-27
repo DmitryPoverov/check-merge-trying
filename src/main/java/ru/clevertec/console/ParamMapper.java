@@ -35,13 +35,6 @@ public class ParamMapper {
     public void setPrice(double price) {
         this.price = price;
     }
-/*    @Override
-    public String toString() {
-        return "ParamMapper{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                '}';
-    }*/
 
     @Override
     public String toString() {
@@ -52,4 +45,13 @@ public class ParamMapper {
                 ", quantity=" + quantity +
                 '}';
     }
+    
+    /* Don't remember why i have left this method.
+        @Override
+        public String toString() {
+            return "ParamMapper{" +
+                    "id=" + id +
+                    ", quantity=" + quantity +
+                    '}';
+        }*/
 }
