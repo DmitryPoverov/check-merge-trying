@@ -28,6 +28,14 @@ public class Check {
         parseParamsToGoodsAndCard(argsFromFile);
     }
 
+    public String getDiscountCard() {
+        return discountCard;
+    }
+
+    public List<ParamMapper> getParamMappersList() {
+        return paramMappersList;
+    }
+
     private void setParamMappersList(List<ParamMapper> paramMappersList) {
         this.paramMappersList = paramMappersList;
     }
