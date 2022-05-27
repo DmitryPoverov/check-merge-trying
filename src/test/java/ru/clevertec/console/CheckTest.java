@@ -57,7 +57,7 @@ public class CheckTest {
     }
 
     Stream<String> generateCorrectProductList() {
-        return Stream.of("30;Яблоко;2.45;4", "26;Cherry;3.18;6", "39;Strawberry;100.00;8", "35;Nectarine;3.17;9");
+        return Stream.of("30;РЇР±Р»РѕРєРѕ;2.45;4", "26;Cherry;3.18;6", "39;Strawberry;100.00;8", "35;Nectarine;3.17;9");
     }
 
     @ParameterizedTest
@@ -68,7 +68,7 @@ public class CheckTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"8;Ёлка;10.12;02", "8;елка;10.12;2", "28;Apple;1.12;50", "28;APllE;1.12;2"})
+    @ValueSource(strings = {"8;РЇР‘Р»РћРєРѕ;10.12;02", "8;С‘Р»РєР°;10.12;2", "28;Apple;1.12;50", "28;APllE;1.12;2"})
     void testShouldCheckRegexWithIncorrectValues(String product) {
         boolean isValid = check.isValid(product);
         Assertions.assertFalse(isValid);
