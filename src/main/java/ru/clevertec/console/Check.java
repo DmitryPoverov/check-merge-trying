@@ -17,11 +17,9 @@ public class Check {
 
     public Check() {
     }
-
     public Check(String[] args) {
         parseParamsToGoodsAndCard(args);
     }
-
     public Check(String path) throws IOException {
         String contentOfFile = convertPathStringToTextString(path, "");
         String[] argsFromFile = convertStringToArray(contentOfFile, ", ");
@@ -31,7 +29,6 @@ public class Check {
     public String getDiscountCard() {
         return discountCard;
     }
-
     public List<ParamMapper> getParamMappersList() {
         return paramMappersList;
     }
@@ -39,7 +36,6 @@ public class Check {
     private void setParamMappersList(List<ParamMapper> paramMappersList) {
         this.paramMappersList = paramMappersList;
     }
-
     private void setDiscountCard(String discountCard) {
         this.discountCard = discountCard;
     }
@@ -47,15 +43,15 @@ public class Check {
     public void checkData(String[] strings, String invalidDataFilePath) {
         List<String> params = new ArrayList<>();
         try(FileWriter fileWriter = new FileWriter(invalidDataFilePath, false)) {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder wrongData = new StringBuilder();
             for (String s : strings) {
                 if (isValid(s)) {
                     params.add(s);
                 } else {
-                    stringBuilder.append(s).append("\n");
+                    wrongData.append(s).append("\n");
                 }
             }
-            fileWriter.write(stringBuilder.toString());
+            fileWriter.write(wrongData.toString());
             setParamMappersList(setParamMapper(params, ";"));
         } catch (IOException e) {
             System.out.println(e.getMessage());

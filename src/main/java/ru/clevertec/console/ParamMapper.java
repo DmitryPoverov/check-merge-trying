@@ -17,6 +17,13 @@ public class ParamMapper {
         this.quantity = quantity;
     }
 
+    public ParamMapper(int id, String name, double price, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public int getId() {
         return id;
     }
@@ -65,13 +72,4 @@ public class ParamMapper {
     public int hashCode() {
         return Objects.hash(id, name, price, quantity);
     }
-
-/* Don't remember why i have left this method.
-        @Override
-        public String toString() {
-            return "ParamMapper{" +
-                    "id=" + id +
-                    ", quantity=" + quantity +
-                    '}';
-        }*/
 }
