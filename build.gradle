@@ -29,6 +29,11 @@ application {
     mainClass = 'ru.clevertec.console.CheckRunner'
 }
 
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 /*//This task copies the 1.txt-file from /testTask to testTask/tempCopy
 task copyFiles(type: Copy) {
