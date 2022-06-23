@@ -35,7 +35,7 @@ public class CheckTest {
         //given
         Check check = new Check("testTask/1.txt");
         //when
-        List<String> stringList = check.printToStringList();
+        List<String> stringList = check.getCheckService().printToStringList(check);
         StringBuilder actual = new StringBuilder();
         for (int i=0; i<stringList.size(); i++) {
             if (i==4) {

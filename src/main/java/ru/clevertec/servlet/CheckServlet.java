@@ -25,7 +25,7 @@ public class CheckServlet extends HttpServlet {
         Map<String, String[]> parameterMap = req.getParameterMap();
         String[] ids = parameterMap.get("id");
         Check check = new Check(ids);
-        List<String> stringsToPrint = check.createList();
+        List<String> stringsToPrint = check.getCheckService().createList(check);
 
         List<String> dottedStringToPrint = new ArrayList<>();
         for (String s : stringsToPrint) {
@@ -75,7 +75,7 @@ public class CheckServlet extends HttpServlet {
         }
 
         Check check = new Check(newArgs);
-        List<String> stringList = check.createList();
+        List<String> stringList = check.getCheckService().createList(check);
 
         resp.setContentType("text/html");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());

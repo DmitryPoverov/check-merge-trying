@@ -9,18 +9,18 @@ public class CheckRunner {
         if (args[0].equals("--f")) {
             String path = args[1];
             Check check = new Check(path);
-            check.printToFile(args[2]);
+            check.getCheckService().printToFile(args[2], check);
             System.out.println("File is written");
         } else if (args[0].equals("--s")) {
             Check check = new Check();
             String path = args[1];
-            String contentOfFile = check.convertPathStringToTextString(path, "\r\n");
-            String[] inputStrings = check.convertStringToArray(contentOfFile, "\r\n");
-            check.checkData(inputStrings, args[2]);
-            check.printToConsoleFromFile();
+            String contentOfFile = check.getCheckService().convertPathStringToTextString(path, "\r\n");
+            String[] inputStrings = check.getCheckService().convertStringToArray(contentOfFile, "\r\n");
+            check.getCheckService().checkData(inputStrings, args[2], check);
+            check.getCheckService().printToConsoleFromFile(check);
         } else {
             Check check = new Check(args);
-            for (String s : check.printToStringList()) {
+            for (String s : check.getCheckService().printToStringList(check)) {
                 System.out.println(s);
             }
         }
