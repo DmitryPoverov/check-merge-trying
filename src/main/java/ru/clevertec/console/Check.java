@@ -9,19 +9,19 @@ import java.util.List;
 
 public class Check {
 
-    private static final CheckServiceInterface CHECK_SERVICE_INSTANCE = new ServiceClassInterfaceImpl();
+    private static final CheckServiceInterface SERVICE_INSTANCE = new ServiceClassInterfaceImpl();
     private String discountCard;
     private List<ParamMapper> paramMappersList = new ArrayList<>();
 
     public Check() {
     }
     public Check(String[] arguments) {
-        CHECK_SERVICE_INSTANCE.parseParamsToGoodsAndCard(arguments, this);
+        SERVICE_INSTANCE.parseParamsToGoodsAndCard(arguments, this);
     }
     public Check(String path) throws IOException {
-        String contentOfFile = CHECK_SERVICE_INSTANCE.convertPathStringToTextString(path, "");
-        String[] argsFromFile = CHECK_SERVICE_INSTANCE.convertStringToArray(contentOfFile, ", ");
-        CHECK_SERVICE_INSTANCE.parseParamsToGoodsAndCard(argsFromFile, this);
+        String contentOfFile = SERVICE_INSTANCE.convertPathStringToTextString(path, "");
+        String[] argsFromFile = SERVICE_INSTANCE.convertStringToArray(contentOfFile, ", ");
+        SERVICE_INSTANCE.parseParamsToGoodsAndCard(argsFromFile, this);
     }
 
     public void setParamMappersList(List<ParamMapper> paramMappersList) {
@@ -37,6 +37,6 @@ public class Check {
         return paramMappersList;
     }
     public CheckServiceInterface getCheckService() {
-        return CHECK_SERVICE_INSTANCE;
+        return SERVICE_INSTANCE;
     }
 }
