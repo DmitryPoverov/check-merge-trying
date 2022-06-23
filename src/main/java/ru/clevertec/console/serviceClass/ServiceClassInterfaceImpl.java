@@ -34,7 +34,7 @@ public class ServiceClassInterfaceImpl implements CheckServiceInterface {
     }
     public void checkData(String[] strings, String invalidDataFilePath, Check check) {
         List<String> params = new ArrayList<>();
-        try(FileWriter fileWriter = new FileWriter(invalidDataFilePath, false)) {
+        try (FileWriter fileWriter = new FileWriter(invalidDataFilePath, false)) {
             StringBuilder stringBuilder = new StringBuilder();
             for (String s : strings) {
                 if (isValid(s)) {
@@ -148,7 +148,7 @@ public class ServiceClassInterfaceImpl implements CheckServiceInterface {
         for (String line : params) {
             ParamMapper product = new ParamMapper();
             String[] products = line.split(regex);
-            if (products.length==2) {
+            if (products.length == 2) {
                 for (int i = 0; i < products.length; i++) {
                     if (i == 0) {
                         product.setId(Integer.parseInt(products[i]));
@@ -156,7 +156,7 @@ public class ServiceClassInterfaceImpl implements CheckServiceInterface {
                         product.setQuantity(Integer.parseInt(products[i]));
                     }
                 }
-            } else if (products.length==4) {
+            } else if (products.length == 4) {
                 for (int i = 0; i < products.length; i++) {
                     if (i == 0) {
                         product.setId(Integer.parseInt(products[i]));
@@ -193,7 +193,7 @@ public class ServiceClassInterfaceImpl implements CheckServiceInterface {
                 String description = pM.getName();
                 int quantity = pM.getQuantity();
                 double price = pM.getPrice();
-                double total = quantity*price;
+                double total = quantity * price;
                 finalPrice += total;
 
                 System.out.printf("%2d  %-17s %7.2f  %6.2f%n", quantity, description, price, total);
