@@ -6,7 +6,9 @@ import ru.clevertec.console.ParamMapper;
 import java.io.IOException;
 import java.util.List;
 
-public interface CheckServiceInterface {
+public interface CheckService {
+
+    // TODO SingleTone???
 
     void parseParamsToGoodsAndCard(String[] arguments, Check check);
     void checkData(String[] strings, String invalidDataFilePath, Check check);

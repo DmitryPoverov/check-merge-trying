@@ -23,6 +23,7 @@ public class ParamMapper {
         return price;
     }
 
+
     public void setId(int id) {
         this.id = id;
     }
@@ -35,21 +36,9 @@ public class ParamMapper {
     public void setPrice(double price) {
         this.price = price;
     }
-/*    @Override
-    public String toString() {
-        return "ParamMapper{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                '}';
-    }*/
 
     @Override
     public String toString() {
-        return "ParamMapper{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
+        return "ParamMapper{" + id + ", " + name + ", " + price + "$, " + quantity;
     }
 }

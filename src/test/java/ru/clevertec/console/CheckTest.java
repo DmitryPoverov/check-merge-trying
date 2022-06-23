@@ -2,11 +2,15 @@ package ru.clevertec.console;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.clevertec.console.serviceClass.CheckService;
+import ru.clevertec.console.serviceClass.CheckServiceImpl;
 
 import java.io.IOException;
 import java.util.List;
 
 public class CheckTest {
+
+    CheckService checkService = new CheckServiceImpl();
 
     private static final String EXPECTED = """
             --------------------------------------
@@ -33,7 +37,7 @@ public class CheckTest {
     @Test
     public void testGetDescriptionByIdShouldReturnId() throws IOException {
         //given
-        Check check = new Check("testTask/1.txt");
+        Check check = new Check(checkService, "testTask/1.txt");
         //when
         List<String> stringList = check.getCheckService().printToStringList(check);
         StringBuilder actual = new StringBuilder();

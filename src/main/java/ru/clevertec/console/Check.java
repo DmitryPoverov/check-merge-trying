@@ -1,7 +1,6 @@
 package ru.clevertec.console;
 
-import ru.clevertec.console.serviceClass.CheckServiceInterface;
-import ru.clevertec.console.serviceClass.ServiceClassInterfaceImpl;
+import ru.clevertec.console.serviceClass.CheckService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,19 +8,22 @@ import java.util.List;
 
 public class Check {
 
-    private static final CheckServiceInterface SERVICE_INSTANCE = new ServiceClassInterfaceImpl();
+    private final CheckService service;
     private String discountCard;
     private List<ParamMapper> paramMappersList = new ArrayList<>();
 
-    public Check() {
+    public Check(CheckService checkService) {
+        service = checkService;
     }
-    public Check(String[] arguments) {
-        SERVICE_INSTANCE.parseParamsToGoodsAndCard(arguments, this);
+    public Check(CheckService checkService, String[] arguments) {
+        service = checkService;
+        service.parseParamsToGoodsAndCard(arguments, this);
     }
-    public Check(String path) throws IOException {
-        String contentOfFile = SERVICE_INSTANCE.convertPathStringToTextString(path, "");
-        String[] argsFromFile = SERVICE_INSTANCE.convertStringToArray(contentOfFile, ", ");
-        SERVICE_INSTANCE.parseParamsToGoodsAndCard(argsFromFile, this);
+    public Check(CheckService checkService, String path) throws IOException {
+        service = checkService;
+        String contentOfFile = service.convertPathStringToTextString(path, "");
+        String[] argsFromFile = service.convertStringToArray(contentOfFile, ", ");
+        service.parseParamsToGoodsAndCard(argsFromFile, this);
     }
 
     public void setParamMappersList(List<ParamMapper> paramMappersList) {
@@ -36,7 +38,12 @@ public class Check {
     public List<ParamMapper> getParamMappersList() {
         return paramMappersList;
     }
-    public CheckServiceInterface getCheckService() {
-        return SERVICE_INSTANCE;
+    public CheckService getCheckService() {
+        return service;
+    }
+
+    @Override
+    public String toString() {
+        return "Check{" + "Card='" + discountCard + '\'' + ", List=" + paramMappersList + '}';
     }
 }

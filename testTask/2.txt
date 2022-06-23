@@ -2,7 +2,7 @@
             CASH RECEIPT
             Supermarket
 
-                  2022-06-23 16:02:09
+                  2022-06-23 18:08:17
 --------------------------------------
 QTY DESCRIPTION         PRICE   TOTAL
  1  Boots2              25,00   25,00

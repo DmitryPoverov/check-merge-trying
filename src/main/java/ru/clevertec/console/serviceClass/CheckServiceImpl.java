@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ServiceClassInterfaceImpl implements CheckServiceInterface {
+public class CheckServiceImpl implements CheckService {
 
     public void parseParamsToGoodsAndCard(String[] args, Check check) {
         List<String> tempList = new ArrayList<>();
