@@ -1,7 +1,6 @@
 package ru.clevertec.console;
 
 import ru.clevertec.exception.WrongIdException;
-import lombok.SneakyThrows;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -55,7 +54,7 @@ public class Check {
     }
 
     public boolean isValid(String productString) {
-        String regex = "^(100|[1-9]\\d?);([A-Z][a-z]{2,29}|[А-ЯЁ][а-яё]{2,29});(100\\.00|[1-9]\\d?\\.\\d{2});(20|[1]\\d|[1-9])$";
+        String regex = "^(100|[1-9]\\d?);([A-Z][a-z]{2,29}|[А-ЯЁ][а-яё]{2,29});(100\\.00|[1-9]\\d?\\.\\d{2});(20|1\\d|[1-9])$";
         return productString.matches(regex);
     }
 
@@ -63,7 +62,6 @@ public class Check {
         return text.split(regex);
     }
 
-    @SneakyThrows
     protected String convertPathStringToTextString(String path, String delimiter) throws IOException {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {

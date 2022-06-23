@@ -30,7 +30,7 @@ application {
 }
 
 
-//This task copies the 1.txt-file from /testTask to testTask/tempCopy
+/*//This task copies the 1.txt-file from /testTask to testTask/tempCopy
 task copyFiles(type: Copy) {
     from 'testTask'
     into 'testTask/tempCopy'
@@ -59,7 +59,7 @@ class FileDownloader extends DefaultTask {
             println e
         }
     }
-}
+}*/
 
 
 //// 1st training task
