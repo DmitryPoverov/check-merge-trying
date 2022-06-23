@@ -10,7 +10,6 @@ import java.util.List;
 public class Check {
 
     private static final CheckServiceInterface CHECK_SERVICE_INSTANCE = new ServiceClassInterfaceImpl();
-
     private String discountCard;
     private List<ParamMapper> paramMappersList = new ArrayList<>();
 
