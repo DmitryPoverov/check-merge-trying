@@ -19,8 +19,7 @@ import java.util.Map;
 @WebServlet("/check")
 public class CheckServlet extends HttpServlet {
 
-    CheckService checkService = new CheckServiceImpl();
-
+    CheckService checkService = CheckServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

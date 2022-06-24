@@ -4,7 +4,7 @@ import ru.clevertec.exception.WrongIdException;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ProductsTest {
+public class GoodsTest {
 
     private static final int CORRECT_ID = 10;
 
@@ -15,7 +15,7 @@ public class ProductsTest {
         //given
         String expected = "Dress2";
         //when
-        String actual = Products.getDescriptionById(CORRECT_ID);
+        String actual = Goods.getDescriptionById(CORRECT_ID);
         //then
         Assert.assertEquals(expected, actual);
     }
@@ -24,7 +24,7 @@ public class ProductsTest {
     public void testGetDescriptionByIdShouldThrowsException() {
         //given
         //when
-        Products.getDescriptionById(WRONG_ID);
+        Goods.getDescriptionById(WRONG_ID);
         //then
     }
 
@@ -33,7 +33,7 @@ public class ProductsTest {
         //given
         double expected = 15;
         //when
-        double actual = Products.getPriceById(CORRECT_ID);
+        double actual = Goods.getPriceById(CORRECT_ID);
         //then
         Assert.assertEquals(expected, actual, 0);
     }
@@ -42,7 +42,7 @@ public class ProductsTest {
     public void testGetPriceByIdShouldThrowsException() {
         //given
         //when
-        Products.getPriceById(WRONG_ID);
+        Goods.getPriceById(WRONG_ID);
         //then
     }
 }

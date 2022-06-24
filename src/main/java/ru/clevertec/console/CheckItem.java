@@ -1,13 +1,25 @@
 package ru.clevertec.console;
 
-public class ParamMapper {
+public class CheckItem {
 
     private int id;
     private String name;
     private double price;
     private int quantity;
 
-    public ParamMapper() {
+    public CheckItem() {
+    }
+
+    public CheckItem(int id, int quantity) {
+        this.id = id;
+        this.quantity = quantity;
+    }
+
+    public CheckItem(int id, String name, double price, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -39,6 +51,6 @@ public class ParamMapper {
 
     @Override
     public String toString() {
-        return "ParamMapper{" + id + ", " + name + ", " + price + "$, " + quantity;
+        return "{" + id + ", " + name + ", " + price + "$, " + quantity + '}';
     }
 }

@@ -2,8 +2,8 @@ package ru.clevertec.console.serviceClass;
 
 import ru.clevertec.console.Cards;
 import ru.clevertec.console.Check;
-import ru.clevertec.console.ParamMapper;
-import ru.clevertec.console.Products;
+import ru.clevertec.console.CheckItem;
+import ru.clevertec.console.Goods;
 import ru.clevertec.exception.WrongIdException;
 
 import java.io.*;
@@ -14,6 +14,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CheckServiceImpl implements CheckService {
+
+    private static CheckService instance;
+
+    private CheckServiceImpl() {
+    }
+
+    public static CheckService getInstance() {
+        CheckService temporalInstance = instance;
+        if (temporalInstance == null) {
+            instance = temporalInstance = new CheckServiceImpl();
+        }
+        return temporalInstance;
+    }
 
     public void parseParamsToGoodsAndCard(String[] args, Check check) {
         List<String> tempList = new ArrayList<>();
@@ -30,8 +43,9 @@ public class CheckServiceImpl implements CheckService {
             }
         }
         check.setDiscountCard(tempCard);
-        check.setParamMappersList(setParamMapper(tempList, "-"));
+        check.setCheckItemsList(setParamMapper(tempList, "-"));
     }
+
     public void checkData(String[] strings, String invalidDataFilePath, Check check) {
         List<String> params = new ArrayList<>();
         try (FileWriter fileWriter = new FileWriter(invalidDataFilePath, false)) {
@@ -44,15 +58,17 @@ public class CheckServiceImpl implements CheckService {
                 }
             }
             fileWriter.write(stringBuilder.toString());
-            check.setParamMappersList(setParamMapper(params, ";"));
+            check.setCheckItemsList(setParamMapper(params, ";"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
     public boolean isValid(String productString) {
         String regex = "^(100|[1-9]\\d?);([A-Z][a-z]{2,29}|[À-ß¨][à-ÿ¸]{2,29});(100\\.00|[1-9]\\d?\\.\\d{2});(20|1\\d|[1-9])$";
         return productString.matches(regex);
     }
+
     public List<String> createList(Check check) {
         int id;
         double price;
@@ -68,12 +84,12 @@ public class CheckServiceImpl implements CheckService {
         double finalPrice;
         List<String> stringsToPrint = new ArrayList<>();
 
-        for (ParamMapper pM : check.getParamMappersList()) {
+        for (CheckItem pM : check.getCheckItemsList()) {
             id = pM.getId();
             quantity = pM.getQuantity();
 
             try {
-                if (Products.isDiscount(id)) {
+                if (Goods.isDiscount(id)) {
                     discountProductsCounter += quantity;
                 }
             } catch (WrongIdException e) {
@@ -89,18 +105,18 @@ public class CheckServiceImpl implements CheckService {
         stringsToPrint.add("--------------------------------------");
         stringsToPrint.add("QTY DESCRIPTION         PRICE   TOTAL");
 
-        for (ParamMapper pM : check.getParamMappersList()) {
+        for (CheckItem pM : check.getCheckItemsList()) {
             fiveProductDiscount = 0;
             id = pM.getId();
 
             try {
-                description = Products.getDescriptionById(pM.getId());
-                price = Products.getPriceById(pM.getId());
+                description = Goods.getDescriptionById(pM.getId());
+                price = Goods.getPriceById(pM.getId());
                 quantity = pM.getQuantity();
                 if (discountProductsCounter > 5) {
                     fiveProductDiscount = 0.2;
                 }
-                if (Products.isDiscount(id)) {
+                if (Goods.isDiscount(id)) {
                     double fiveProductsCurrentDiscount = fiveProductDiscount * price * quantity;
                     fiveProductsTotalDiscount += fiveProductsCurrentDiscount;
                     total = price * quantity - fiveProductsCurrentDiscount;
@@ -125,6 +141,7 @@ public class CheckServiceImpl implements CheckService {
         stringsToPrint.add("--------------------------------------");
         return stringsToPrint;
     }
+
     public String convertPathStringToTextString(String path, String delimiter) throws IOException {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -132,7 +149,8 @@ public class CheckServiceImpl implements CheckService {
         }
         return sb.toString();
     }
-    public void printToFile(String path, Check check) {
+
+    public void printToFile(Check check, String path) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             List<String> stringList = createList(check);
             for (String s : stringList) {
@@ -143,42 +161,46 @@ public class CheckServiceImpl implements CheckService {
             System.out.println("!!! You entered a wrong path!!! ");
         }
     }
-    public List<ParamMapper> setParamMapper(List<String> params, String regex) {
-        List<ParamMapper> paramMappers = new ArrayList<>();
+
+    public List<CheckItem> setParamMapper(List<String> params, String regex) {
+        List<CheckItem> checkItems = new ArrayList<>();
         for (String line : params) {
-            ParamMapper product = new ParamMapper();
-            String[] products = line.split(regex);
-            if (products.length == 2) {
-                for (int i = 0; i < products.length; i++) {
+            CheckItem checkItem = new CheckItem();
+            String[] paramsOfItem = line.split(regex);
+            if (paramsOfItem.length == 2) {
+                for (int i = 0; i < paramsOfItem.length; i++) {
                     if (i == 0) {
-                        product.setId(Integer.parseInt(products[i]));
+                        checkItem.setId(Integer.parseInt(paramsOfItem[i]));
                     } else {
-                        product.setQuantity(Integer.parseInt(products[i]));
+                        checkItem.setQuantity(Integer.parseInt(paramsOfItem[i]));
                     }
                 }
-            } else if (products.length == 4) {
-                for (int i = 0; i < products.length; i++) {
+            } else if (paramsOfItem.length == 4) {
+                for (int i = 0; i < paramsOfItem.length; i++) {
                     if (i == 0) {
-                        product.setId(Integer.parseInt(products[i]));
+                        checkItem.setId(Integer.parseInt(paramsOfItem[i]));
                     } else if (i == 1) {
-                        product.setName(products[i]);
+                        checkItem.setName(paramsOfItem[i]);
                     } else if (i == 2) {
-                        product.setPrice(Double.parseDouble(products[i]));
+                        checkItem.setPrice(Double.parseDouble(paramsOfItem[i]));
                     } else {
-                        product.setQuantity(Integer.parseInt(products[i]));
+                        checkItem.setQuantity(Integer.parseInt(paramsOfItem[i]));
                     }
                 }
             }
-            paramMappers.add(product);
+            checkItems.add(checkItem);
         }
-        return paramMappers;
+        return checkItems;
     }
+
     public List<String> printToStringList(Check check) {
         return createList(check);
     }
+
     public String[] convertStringToArray(String text, String regex) {
         return text.split(regex);
     }
+
     public void printToConsoleFromFile(Check check) {
         System.out.println("--------------------------------------");
         System.out.println("            CASH RECEIPT");
@@ -188,7 +210,7 @@ public class CheckServiceImpl implements CheckService {
         System.out.println("--------------------------------------");
         System.out.println("QTY DESCRIPTION         PRICE   TOTAL");
         double finalPrice = 0;
-        for (ParamMapper pM : check.getParamMappersList()) {
+        for (CheckItem pM : check.getCheckItemsList()) {
             try {
                 String description = pM.getName();
                 int quantity = pM.getQuantity();

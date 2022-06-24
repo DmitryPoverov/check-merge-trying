@@ -12,7 +12,7 @@ public class CheckRunner {
     public static void main(String[] args) throws IOException {
 
         CheckService checkService;
-        CheckService tempService = new CheckServiceImpl();
+        CheckService tempService = CheckServiceImpl.getInstance();
         ClassLoader classLoader = tempService.getClass().getClassLoader();
         Class<?>[] interfaces = tempService.getClass().getInterfaces();
         checkService = (CheckService) Proxy.newProxyInstance(classLoader, interfaces, new ServiceHandler(tempService));
@@ -20,7 +20,7 @@ public class CheckRunner {
         if (args[0].equals("--f")) {
             String path = args[1];
             Check check = new Check(checkService, path);
-            check.getCheckService().printToFile(args[2], check);
+            check.getCheckService().printToFile(check, args[2]);
             System.out.println("File is written");
         } else if (args[0].equals("--s")) {
             Check check = new Check(checkService);

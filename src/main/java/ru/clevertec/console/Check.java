@@ -8,9 +8,9 @@ import java.util.List;
 
 public class Check {
 
-    private final CheckService service;
+    private transient CheckService service;
     private String discountCard;
-    private List<ParamMapper> paramMappersList = new ArrayList<>();
+    private List<CheckItem> checkItemList = new ArrayList<>();
 
     public Check(CheckService checkService) {
         service = checkService;
@@ -26,8 +26,13 @@ public class Check {
         service.parseParamsToGoodsAndCard(argsFromFile, this);
     }
 
-    public void setParamMappersList(List<ParamMapper> paramMappersList) {
-        this.paramMappersList = paramMappersList;
+    public Check(String discountCard, List<CheckItem> checkItemList) {
+        this.discountCard = discountCard;
+        this.checkItemList = checkItemList;
+    }
+
+    public void setCheckItemsList(List<CheckItem> checkItemList) {
+        this.checkItemList = checkItemList;
     }
     public void setDiscountCard(String discountCard) {
         this.discountCard = discountCard;
@@ -35,8 +40,8 @@ public class Check {
     public String getDiscountCard() {
         return discountCard;
     }
-    public List<ParamMapper> getParamMappersList() {
-        return paramMappersList;
+    public List<CheckItem> getCheckItemsList() {
+        return checkItemList;
     }
     public CheckService getCheckService() {
         return service;
@@ -44,6 +49,6 @@ public class Check {
 
     @Override
     public String toString() {
-        return "Check{" + "Card='" + discountCard + '\'' + ", List=" + paramMappersList + '}';
+        return "Check{" + "Card:" + discountCard + ", Goods:" + checkItemList + '}';
     }
 }

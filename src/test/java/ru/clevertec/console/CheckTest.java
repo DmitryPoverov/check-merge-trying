@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CheckTest {
 
-    CheckService checkService = new CheckServiceImpl();
+    CheckService checkService = CheckServiceImpl.getInstance();
 
     private static final String EXPECTED = """
             --------------------------------------
