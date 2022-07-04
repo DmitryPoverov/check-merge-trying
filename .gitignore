@@ -5,6 +5,8 @@ target
 *.MF
 *.txt
 *.json
+*.pdf
+*.docx
 
 # Compiled class file
 *.class
