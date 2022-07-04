@@ -4,6 +4,7 @@ target
 .gitignore
 *.MF
 *.txt
+*.json
 
 # Compiled class file
 *.class
