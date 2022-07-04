@@ -3,6 +3,7 @@ out
 target
 .gitignore
 *.MF
+*.txt
 
 # Compiled class file
 *.class
