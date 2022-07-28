@@ -1,5 +1,7 @@
 package ru.clevertec.console;
 
+import java.util.Objects;
+
 public class CheckItem {
 
     private int id;
@@ -52,5 +54,18 @@ public class CheckItem {
     @Override
     public String toString() {
         return "{" + id + ", " + name + ", " + price + "$, " + quantity + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CheckItem checkItem = (CheckItem) o;
+        return id == checkItem.id && Double.compare(checkItem.price, price) == 0 && quantity == checkItem.quantity && Objects.equals(name, checkItem.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, quantity);
     }
 }
